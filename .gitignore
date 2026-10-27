@@ -1,0 +1,4 @@
+b09_sim
+*.vcd
+designs/b09_onehot_binary/runs/*/
+!designs/b09_onehot_binary/runs/*/results/final/gds/*.gds

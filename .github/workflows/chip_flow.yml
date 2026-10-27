@@ -1,0 +1,53 @@
+name: RTL Simulation and OpenLane GDS Flow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  simulation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Icarus Verilog
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y iverilog
+
+      - name: Run Simulation
+        run: |
+          iverilog -g2012 -o b09_sim b09_onehot_binary.sv b09_reference.sv b09_tb.sv
+          vvp b09_sim
+
+  gds_and_render:
+    needs: simulation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run OpenLane Flow
+        uses: efabless/openlane-action@v1
+        with:
+          design: 'b09_onehot_binary'
+
+      - name: Install KLayout
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y klayout python3
+
+      - name: Render Layout Image
+        run: |
+          klayout -b -r render_gds.py
+
+      - name: Upload Output Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: gds-and-layout-results
+          path: |
+            b09_layout.png
+            designs/b09_onehot_binary/runs/*/results/final/gds/*.gds
