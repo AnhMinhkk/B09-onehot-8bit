@@ -40,7 +40,7 @@ jobs:
           docker run --rm \
             -v $(pwd)/designs/b09_onehot_binary:/openlane/designs/b09_onehot_binary \
             -w /openlane \
-            efabless/openlane:current ./flow.tcl -design b09_onehot_binary
+            efabless/openlane:2023.11.03 ./flow.tcl -design b09_onehot_binary
 
       - name: Install KLayout
         run: |
