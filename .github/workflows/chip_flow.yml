@@ -40,7 +40,7 @@ jobs:
           docker run --rm \
             -v $(pwd)/designs/b09_onehot_binary:/openlane/designs/b09_onehot_binary \
             -w /openlane \
-            efabless/openlane:2023.11.03 bash -c "volare enable && ./flow.tcl -design b09_onehot_binary"
+            efabless/openlane:2023.11.03 bash -c "export PATH=/venv/bin:/root/.local/bin:\$PATH && volare enable && ./flow.tcl -design b09_onehot_binary"
           sudo chmod -R 777 designs/
 
       - name: Install KLayout and Virtual Display
