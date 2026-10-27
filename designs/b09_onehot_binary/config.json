@@ -1,6 +1,7 @@
 {
     "DESIGN_NAME": "b09_onehot_binary",
     "VERILOG_FILES": ["dir::src/b09_onehot_binary.sv"],
+    "PDK": "sky130A",
     "CLOCK_PORT": null,
     "CLOCK_TREE_SYNTH": 0,
     "FP_SIZING": "absolute",
