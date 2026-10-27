@@ -64,4 +64,4 @@ jobs:
           if-no-files-found: warn
           path: |
             b09_layout.png
-            designs/b09_onehot_binary/runs/*/results/final/gds/*.gds
+            designs/b09_onehot_binary/runs/**/*.gds
