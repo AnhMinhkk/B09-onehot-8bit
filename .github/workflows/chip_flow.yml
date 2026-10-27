@@ -30,10 +30,17 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Run OpenLane Flow
-        uses: efabless/openlane-action@v1
-        with:
-          design: 'b09_onehot_binary'
+      - name: Prepare Design Folder
+        run: |
+          mkdir -p designs/b09_onehot_binary/src
+          cp b09_onehot_binary.sv designs/b09_onehot_binary/src/
+
+      - name: Run OpenLane via Docker
+        run: |
+          docker run --rm \
+            -v $(pwd)/designs/b09_onehot_binary:/openlane/designs/b09_onehot_binary \
+            -w /openlane \
+            efabless/openlane:v1.0.0 ./flow.tcl -design b09_onehot_binary
 
       - name: Install KLayout
         run: |
