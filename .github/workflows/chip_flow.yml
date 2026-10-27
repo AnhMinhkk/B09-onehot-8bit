@@ -51,12 +51,13 @@ jobs:
       - name: Render Layout Image
         run: |
           export QT_QPA_PLATFORM=offscreen
-          xvfb-run klayout -b -r render_gds.py
+          xvfb-run klayout -r render_gds.py
 
       - name: Upload Output Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: gds-and-layout-results
+          if-no-files-found: warn
           path: |
             b09_layout.png
-            designs/b09_onehot_binary/runs/*/results/final/gds/*.gds
+            designs/b09_onehot_binary/runs/*
