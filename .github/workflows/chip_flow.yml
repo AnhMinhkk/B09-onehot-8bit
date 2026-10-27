@@ -43,15 +43,15 @@ jobs:
             efabless/openlane:2023.11.03 bash -c "pip install --no-cache-dir volare && volare enable && ./flow.tcl -design b09_onehot_binary"
           sudo chmod -R 777 designs/
 
-      - name: Install KLayout and Virtual Display
+      - name: Install KLayout Python Bindings and Virtual Display
         run: |
           sudo apt-get update
-          sudo apt-get install -y klayout python3 xvfb
+          sudo apt-get install -y python3-klayout xvfb
 
       - name: Render Layout Image
         run: |
           export QT_QPA_PLATFORM=offscreen
-          xvfb-run klayout -r render_gds.py
+          xvfb-run python3 render_gds.py
 
       - name: Upload Output Artifacts
         uses: actions/upload-artifact@v4
@@ -60,4 +60,4 @@ jobs:
           if-no-files-found: warn
           path: |
             b09_layout.png
-            designs/b09_onehot_binary/runs/*
+            designs/b09_onehot_binary/runs/*/results/final/gds/*.gds

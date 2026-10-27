@@ -7,7 +7,7 @@ os.environ["QT_QPA_PLATFORM"] = "offscreen"
 import klayout.db as db
 import klayout.lay as lay
 
-# Tìm kiếm linh hoạt tất cả file .gds được tạo ra trong thư mục runs
+# Tìm file .gds trong thư mục runs
 gds_files = [f for f in glob.glob("designs/b09_onehot_binary/runs/**/*.gds", recursive=True) if not f.endswith(".klayout.gds")]
 
 if not gds_files:
@@ -27,3 +27,4 @@ view.max_view()
 view.save_image(output_png, 1280, 960)
 
 print(f"Đã render layout thành công ra file: {output_png}")
+sys.exit(0)
