@@ -36,8 +36,11 @@ jobs:
           cp b09_onehot_binary.sv designs/b09_onehot_binary/src/
 
       - name: Run OpenLane via Docker
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           docker run --rm \
+            -e GITHUB_TOKEN \
             -v $(pwd)/designs/b09_onehot_binary:/openlane/designs/b09_onehot_binary \
             -w /openlane \
             efabless/openlane:2023.11.03 bash -c "pip install --no-cache-dir volare && volare enable && ./flow.tcl -design b09_onehot_binary"

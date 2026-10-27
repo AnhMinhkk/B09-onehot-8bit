@@ -21,8 +21,9 @@ print(f"Đang đọc file GDS: {gds_path}")
 layout = db.Layout()
 layout.read(gds_path)
 
+# Khởi tạo layout view và nạp dữ liệu chuẩn KLayout Python API
 view = lay.LayoutView()
-view.load_layout(layout, True)
+view.show_layout(layout, False)
 view.max_view()
 view.save_image(output_png, 1280, 960)
 
