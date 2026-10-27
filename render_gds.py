@@ -7,11 +7,15 @@ os.environ["QT_QPA_PLATFORM"] = "offscreen"
 import klayout.db as db
 import klayout.lay as lay
 
-# Tìm file .gds trong thư mục runs
+# Tìm kiếm tất cả file .gds trong thư mục runs
 gds_files = [f for f in glob.glob("designs/b09_onehot_binary/runs/**/*.gds", recursive=True) if not f.endswith(".klayout.gds")]
 
 if not gds_files:
     print("ERROR: Không tìm thấy file GDS trong thư mục runs!")
+    print("Cấu trúc thư mục hiện tại trong runs/:")
+    for root, dirs, files in os.walk("designs/b09_onehot_binary/runs"):
+        for f in files:
+            print("  -", os.path.join(root, f))
     sys.exit(1)
 
 gds_path = sorted(gds_files)[-1]
@@ -21,7 +25,6 @@ print(f"Đang đọc file GDS: {gds_path}")
 layout = db.Layout()
 layout.read(gds_path)
 
-# Khởi tạo layout view và nạp dữ liệu chuẩn KLayout Python API
 view = lay.LayoutView()
 view.show_layout(layout, False)
 view.max_view()
